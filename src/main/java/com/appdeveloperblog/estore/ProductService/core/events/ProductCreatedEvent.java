@@ -1,7 +1,6 @@
 package com.appdeveloperblog.estore.ProductService.core.events;
 
 
-import lombok.Builder;
 import lombok.Data;
 
 import java.math.BigDecimal;
