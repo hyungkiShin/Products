@@ -1,11 +1,9 @@
 package com.appdeveloperblog.estore.ProductService.core.data;
 
+import com.sun.istack.NotNull;
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
@@ -20,7 +18,7 @@ public class ProductEntity implements Serializable {
     @Column(unique = true)
     private String productId;
 
-    @Column(unique = true)
+    @Column(unique=true)
     private String title;
     private BigDecimal price;
     private Integer quantity;

@@ -1,6 +1,6 @@
 package com.appdeveloperblog.estore.ProductService.query;
 
-import com.appdeveloperblog.estore.ProductService.core.ProductsRepository;
+import com.appdeveloperblog.estore.ProductService.core.data.ProductsRepository;
 import com.appdeveloperblog.estore.ProductService.core.data.ProductEntity;
 import com.appdeveloperblog.estore.ProductService.core.events.ProductCreatedEvent;
 import lombok.AllArgsConstructor;
