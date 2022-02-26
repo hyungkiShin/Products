@@ -22,4 +22,3 @@ public class ProductLookupEntity implements Serializable {
     private String title;
 }
 
-
