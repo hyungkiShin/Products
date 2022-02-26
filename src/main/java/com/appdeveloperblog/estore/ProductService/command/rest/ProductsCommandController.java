@@ -2,10 +2,12 @@ package com.appdeveloperblog.estore.ProductService.command.rest;
 
 import com.appdeveloperblog.estore.ProductService.command.CreateProductCommand;
 import org.axonframework.commandhandling.gateway.CommandGateway;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.UUID;
 
 @RestController
@@ -13,44 +15,46 @@ import java.util.UUID;
 public class ProductsCommandController {
 
     private final Environment env;
-    private final CommandGateway gateway;
+    private final CommandGateway commandGateway;
 
     @Autowired
-    public ProductsCommandController(Environment env, CommandGateway gateway) {
+    public ProductsCommandController(Environment env, CommandGateway commandGateway) {
         this.env = env;
-        this.gateway = gateway;
+        this.commandGateway = commandGateway;
     }
 
     @PostMapping
-    public String createProduct(@RequestBody CreateProductRestModel model) {
-        CreateProductCommand command = CreateProductCommand.builder()
-                .price(model.getPrice())
-                .quantity(model.getQuantity())
-                .title(model.getTitle())
+    public String createProduct(@Valid @RequestBody CreateProductRestModel createProductRestModel) {
+        CreateProductCommand createProductCommand = CreateProductCommand.builder()
+                .price(createProductRestModel.getPrice())
+                .quantity(createProductRestModel.getQuantity())
+                .title(createProductRestModel.getTitle())
                 .productId(UUID.randomUUID().toString()).build();
 
         String returnValue;
-        try {
-            returnValue = gateway.sendAndWait(command);
-        } catch (Exception ex) {
-            returnValue = ex.getLocalizedMessage();
-        }
-        System.out.println("returnValue " + returnValue);
+        returnValue = commandGateway.sendAndWait(createProductCommand);
+        System.out.println("returnValue = " + returnValue);
+//        try {
+//            returnValue = gateway.sendAndWait(createProductCommand);
+//        } catch (Exception ex) {
+//            returnValue = ex.getLocalizedMessage();
+//        }
+//        System.out.println("returnValue " + returnValue);
         return returnValue;
     }
 
-    @GetMapping
-    public String getProduct() {
-        return "HTTP GET Handled " + env.getProperty("local.server.port");
-    }
-
-    @PutMapping
-    public String updateProduct() {
-        return "HTTP PUT Handled";
-    }
-
-    @DeleteMapping
-    public String deleteProduct() {
-        return "HTTP DELETE HANDLED";
-    }
+//    @GetMapping
+//    public String getProduct() {
+//        return "HTTP GET Handled " + env.getProperty("local.server.port");
+//    }
+//
+//    @PutMapping
+//    public String updateProduct() {
+//        return "HTTP PUT Handled";
+//    }
+//
+//    @DeleteMapping
+//    public String deleteProduct() {
+//        return "HTTP DELETE HANDLED";
+//    }
 }

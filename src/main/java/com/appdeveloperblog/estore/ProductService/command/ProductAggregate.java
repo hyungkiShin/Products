@@ -12,7 +12,6 @@ import org.springframework.beans.BeanUtils;
 import java.math.BigDecimal;
 
 @Aggregate
-@NoArgsConstructor
 public class ProductAggregate {
 
     @AggregateIdentifier
@@ -21,14 +20,20 @@ public class ProductAggregate {
     private BigDecimal price;
     private Integer quantity;
 
+    public ProductAggregate() {
+
+    }
+
     @CommandHandler
     public ProductAggregate(CreateProductCommand createProductCommand) {
         // Validate Create Product Command
+
         if(createProductCommand.getPrice().compareTo(BigDecimal.ZERO) <= 0) {
             throw new IllegalArgumentException("Price cannot be less or equal than zero");
         }
 
-        if(createProductCommand.getTitle() == null || createProductCommand.getTitle().isBlank()) {
+        if(createProductCommand.getTitle() == null
+                || createProductCommand.getTitle().isBlank()) {
             throw new IllegalArgumentException("Title cannot be empty");
         }
 
@@ -46,4 +51,5 @@ public class ProductAggregate {
         this.title = productCreatedEvent.getTitle();
         this.quantity = productCreatedEvent.getQuantity();
     }
+
 }
