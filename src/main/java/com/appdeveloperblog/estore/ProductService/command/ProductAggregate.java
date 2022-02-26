@@ -12,6 +12,7 @@ import org.springframework.beans.BeanUtils;
 import java.math.BigDecimal;
 
 @Aggregate
+@NoArgsConstructor
 public class ProductAggregate {
 
     @AggregateIdentifier
@@ -20,9 +21,6 @@ public class ProductAggregate {
     private BigDecimal price;
     private Integer quantity;
 
-    public ProductAggregate() {
-
-    }
 
     @CommandHandler
     public ProductAggregate(CreateProductCommand createProductCommand) {
