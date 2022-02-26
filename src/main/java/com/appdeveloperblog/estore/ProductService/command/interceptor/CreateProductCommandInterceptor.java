@@ -15,10 +15,9 @@ import java.util.function.BiFunction;
 @Component
 public class CreateProductCommandInterceptor implements MessageDispatchInterceptor<CommandMessage<?>> {
 
+    private  static final Logger LOGGER = LoggerFactory.getLogger(CreateProductCommandInterceptor.class);
     // 제품 조회
     private final ProductLookupRepository productLookupRepository;
-
-    private  static final Logger LOGGER = LoggerFactory.getLogger(CreateProductCommandInterceptor.class);
 
     public CreateProductCommandInterceptor(ProductLookupRepository productLookupRepository) {
         this.productLookupRepository = productLookupRepository;
@@ -39,7 +38,7 @@ public class CreateProductCommandInterceptor implements MessageDispatchIntercept
                 if(productLookupEntity != null) {
                     throw new IllegalStateException(
                             String.format("Product with productId %s or title %s already exist",
-                                    createProductCommand,createProductCommand.getProductId(), createProductCommand.getTitle())
+                                    createProductCommand.getProductId(), createProductCommand.getTitle())
                     );
                 }
             }
