@@ -21,3 +21,5 @@ public class ProductLookupEntity implements Serializable {
     @Column(unique = true)
     private String title;
 }
+
+
