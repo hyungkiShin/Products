@@ -30,11 +30,13 @@ public class CreateProductCommandInterceptor implements MessageDispatchIntercept
             LOGGER.info("Intercepted command: " + command.getPayloadType());
 
             if(CreateProductCommand.class.equals(command.getPayloadType())) {
+
                 CreateProductCommand createProductCommand = (CreateProductCommand) command.getPayload();
 
                 // 제품이 DB 에 존재하는지 검사
                 ProductLookupEntity productLookupEntity = productLookupRepository
                         .findByProductIdOrTitle(createProductCommand.getProductId(), createProductCommand.getTitle());
+
                 if(productLookupEntity != null) {
                     throw new IllegalStateException(
                             String.format("Product with productId %s or title %s already exist",
