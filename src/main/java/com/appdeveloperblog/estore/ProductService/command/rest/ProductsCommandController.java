@@ -32,11 +32,7 @@ public class ProductsCommandController {
                 .productId(UUID.randomUUID().toString()).build();
 
         String returnValue;
-        try {
-            returnValue = commandGateway.sendAndWait(createProductCommand);
-        } catch (Exception ex) {
-            returnValue = ex.getLocalizedMessage();
-        }
+        returnValue = commandGateway.sendAndWait(createProductCommand);
         System.out.println("returnValue " + returnValue);
         return returnValue;
     }
