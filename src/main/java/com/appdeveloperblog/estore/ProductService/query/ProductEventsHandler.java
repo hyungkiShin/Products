@@ -3,6 +3,7 @@ package com.appdeveloperblog.estore.ProductService.query;
 import com.appdeveloperblog.estore.ProductService.core.data.ProductsRepository;
 import com.appdeveloperblog.estore.ProductService.core.data.ProductEntity;
 import com.appdeveloperblog.estore.ProductService.core.events.ProductCreatedEvent;
+import com.appdeveloperblog.estore.core.events.ProductReservedEvent;
 import org.axonframework.config.ProcessingGroup;
 import org.axonframework.eventhandling.EventHandler;
 import org.axonframework.messaging.interceptors.ExceptionHandler;
@@ -31,7 +32,7 @@ public class ProductEventsHandler {
     }
 
     @EventHandler
-    public void on(ProductCreatedEvent event) throws Exception {
+    public void on(ProductCreatedEvent event) {
 
         ProductEntity productEntity = new ProductEntity();
         BeanUtils.copyProperties(event, productEntity);
@@ -41,7 +42,12 @@ public class ProductEventsHandler {
         } catch (IllegalArgumentException ex) {
             ex.printStackTrace();
         }
+    }
 
-        if (true) throw new Exception("Forcing exception in the Event Handler class");
+    @EventHandler
+    public void on(ProductReservedEvent productReservedEvent) {
+        ProductEntity productEntity = productsRepository.findByProductId(productReservedEvent.getProductId());
+        productEntity.setQuantity(productEntity.getQuantity() - productReservedEvent.getQuantity());
+        productsRepository.save(productEntity);
     }
 }
