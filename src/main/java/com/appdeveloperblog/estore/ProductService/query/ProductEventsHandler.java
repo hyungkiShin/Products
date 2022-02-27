@@ -42,6 +42,6 @@ public class ProductEventsHandler {
             ex.printStackTrace();
         }
 
-        if(true) throw new Exception("Forcing exception in the Event Handler class");
+        if (true) throw new Exception("Forcing exception in the Event Handler class");
     }
 }
