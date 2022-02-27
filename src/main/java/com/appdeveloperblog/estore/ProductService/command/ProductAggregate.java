@@ -23,7 +23,7 @@ public class ProductAggregate {
 
 
     @CommandHandler
-    public ProductAggregate(CreateProductCommand createProductCommand) {
+    public ProductAggregate(CreateProductCommand createProductCommand) throws Exception {
         // Validate Create Product Command
 
         if(createProductCommand.getPrice().compareTo(BigDecimal.ZERO) <= 0) {
@@ -49,5 +49,4 @@ public class ProductAggregate {
         this.title = productCreatedEvent.getTitle();
         this.quantity = productCreatedEvent.getQuantity();
     }
-
 }
